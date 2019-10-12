@@ -10,14 +10,18 @@ public class Server {
         ServerSocket serverSocket;
         try {
             serverSocket = new ServerSocket(18080);
-
+            int a=0;
             while (true) {
                 Socket socket = serverSocket.accept();
                 InputStream inputStream = socket.getInputStream();
                 OutputStream outputStream = socket.getOutputStream();
-                System.out.println("rev from client: "+inputStream.read());
-                System.out.println("send to client 12");
-                outputStream.write(12);
+                System.out.println(a++ + " rev from client: "+inputStream.read());
+                
+                String response = "HTTP/1.1 200 OK\r\n" +
+                                "Content-Length: 11\r\n\r\n" +
+                                "Hello World";
+                outputStream.write(response.getBytes());
+
                 socket.close();
             }
 
